@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Mobile Developer & Architect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --bg-light: #f7fafc;
+            --bg-white: #ffffff;
+            --shadow: 0 10px 25px rgba(0,0,0,0.1);
+            --shadow-hover: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            background: url('https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg') center/cover no-repeat;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.2s forwards;
+        }
+
+        .hero-content .description {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.4s forwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--bg-white);
+            color: var(--primary-color);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Main Content */
+        main {
+            background: var(--bg-light);
+            margin-top: 0;
+        }
+
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Experience Section */
+        .experience {
+            background: var(--bg-white);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 2rem 2rem 2rem 0;
+            position: relative;
+            background: transparent;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding: 2rem 0 2rem 2rem;
+        }
+
+        .timeline-content {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            top: 2.5rem;
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-image {
+            height: 200px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .project-description {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--bg-white);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .timeline::after {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0;
+                padding-left: 50px;
+                padding-right: 0;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+                padding-left: 50px;
+                padding-right: 0;
+            }
+
+            .timeline-item::after {
+                left: 10px;
+            }
+
+            .timeline-item:nth-child(even)::after {
+                left: 10px;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">YourName</div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Mobile Developer & Architect</h1>
+            <p class="subtitle">iOS • Android • React Native • Flutter</p>
+            <p class="description">
+                Passionate mobile developer with extensive experience leading teams and architecting 
+                scalable mobile solutions. Transforming ideas into exceptional user experiences.
+            </p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>
+                            I'm a seasoned mobile developer with over X years of experience building 
+                            innovative mobile applications. Throughout my career, I've worn many hats - 
+                            from hands-on developer to team lead to mobile architect.
+                        </p>
+                        <p>
+                            My expertise spans native iOS and Android development, as well as cross-platform 
+                            solutions using React Native and Flutter. I'm passionate about creating 
+                            user-centric applications that solve real-world problems while maintaining 
+                            high code quality and performance standards.
+                        </p>
+                        <p>
+                            When I'm not coding, I enjoy mentoring junior developers, staying up-to-date 
+                            with the latest mobile technologies, and contributing to open-source projects.
+                        </p>
+                    </div>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <div class="skill-icon">📱</div>
+                            <h3>Native Development</h3>
+                            <p>iOS (Swift) & Android (Kotlin/Java)</p>
+                        </div>
+                        <div class="skill-card">
+                            <div class="skill-icon">⚡</div>
+                            <h3>Cross-Platform</h3>
+                            <p>React Native & Flutter</p>
+                        </div>
+                        <div class="skill-card">
+                            <div class="skill-icon">👥</div>
+                            <h3>Leadership</h3>
+                            <p>Team Lead & Mentoring</p>
+                        </div>
+                        <div class="skill-card">
+                            <div class="skill-icon">🏗️</div>
+                            <h3>Architecture</h3>
+                            <p>System Design & Scalability</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="section experience">
+            <div class="container">
+                <h2 class="section-title">Experience</h2>
+                <div class="timeline">
+                    <!-- IBM -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Mobile Team Lead & Senior iOS/Flutter Developer</h3>
+                            <h4>IBM</h4>
+                            <p class="timeline-date">Sep 2022 – Present</p>
+                            <p>Leading global mobile delivery across 9 countries, owning architecture and execution for multi-million user apps and $5M+ in contracts.</p>
+                            <ul>
+                                <li>Led Blue Rewards (UAE retail/offers) and First Abu Dhabi Bank mobile app initiatives.</li>
+                                <li>Increased user retention by ~30% via loyalty use cases and UX improvements.</li>
+                                <li>Reduced application load time by ~25% through performance and codebase optimization.</li>
+                                <li>Defined secure architectures (OWASP/PCI-DSS), added SSL pinning, and biometric auth.</li>
+                                <li>Mentored and coached developers; drove code reviews and close PM collaboration.</li>
+                                <li>Managed App Store/TestFlight and Google Play releases.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Bitfactory GmbH -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Software Engineer, iOS</h3>
+                            <h4>Bitfactory GmbH</h4>
+                            <p class="timeline-date">Dec 2020 – Aug 2022</p>
+                            <p>Shipped iOS apps with strong quality gates and analytics-driven iterations.</p>
+                            <ul>
+                                <li>Practiced unit, widget, and integration testing; enforced Dart lints.</li>
+                                <li>Maintained UX parity across devices; adopted device preview workflows.</li>
+                                <li>Used Cubit state management; wrote technical docs and UML diagrams.</li>
+                                <li>Ran A/B tests; integrated Piano / Firebase Analytics.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Rabbit -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Software Engineer, iOS/Flutter</h3>
+                            <h4>Rabbit</h4>
+                            <p class="timeline-date">Apr 2019 – Dec 2020</p>
+                            <p>Built and optimized dark-store handheld apps enabling 20‑minute grocery delivery across Egypt.</p>
+                            <ul>
+                                <li>Improved performance, binary size, and threading.</li>
+                                <li>Implemented live tracking and chat; integrated Gen AI SDK features.</li>
+                                <li>Integrated REST & GraphQL; set up CI/CD and version control.</li>
+                                <li>Worked within Agile/Scrum/Kanban/Waterfall methodologies.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Vodafone -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Software Engineer, iOS</h3>
+                            <h4>Vodafone</h4>
+                            <p class="timeline-date">Apr 2017 – Apr 2019</p>
+                            <p>Delivered Swift and Objective‑C features for apps serving millions of daily users.</p>
+                            <ul>
+                                <li>Used UIKit, Core ML, Core Data, and Core Animation in production features.</li>
+                                <li>Adopted SwiftUI, RxSwift/RxCocoa with clean architecture; practiced BDD/TDD.</li>
+                                <li>Ensured app security, obfuscation, and CI/CD via Jenkins and SwiftLint.</li>
+                                <li>Owned memory/crash performance and analytics-driven A/B testing.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- ITG -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Software Engineer, iOS</h3>
+                            <h4>ITG</h4>
+                            <p class="timeline-date">Jan 2016 – Apr 2017</p>
+                            <p>Contributed to Eduwave, Wave ERP, and MedX Jordan in iOS and Flutter contexts.</p>
+                            <ul>
+                                <li>Migrated native iOS features to Flutter (Bloc/Provider/Cubit) via platform channels.</li>
+                                <li>Implemented MVVM/MVP with RxDart; networking via Alamofire/URLSession.</li>
+                                <li>Integrated REST services across cross‑platform and native modules.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Iris Studio -->
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <h3>Software Engineer, Android</h3>
+                            <h4>Iris Studio</h4>
+                            <p class="timeline-date">Jan 2015 – Jan 2016</p>
+                            <p>Delivered educational apps on Android.</p>
+                            <ul>
+                                <li>Built with Java/XML and Material Design patterns; RecyclerView implementations.</li>
+                                <li>Used Retrofit for networking and FCM for notifications.</li>
+                                <li>Explored Jetpack Compose for modern UI.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image">🛒</div>
+                        <div class="project-content">
+                            <h3 class="project-title">E-Commerce Mobile App</h3>
+                            <p class="project-description">
+                                Full-featured e-commerce application with real-time notifications, 
+                                payment integration, and advanced search capabilities.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">React Native</span>
+                                <span class="tech-tag">Redux</span>
+                                <span class="tech-tag">Firebase</span>
+                                <span class="tech-tag">Stripe</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">View Demo</a>
+                                <a href="#" class="project-link">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">🏥</div>
+                        <div class="project-content">
+                            <h3 class="project-title">Healthcare Management System</h3>
+                            <p class="project-description">
+                                HIPAA-compliant healthcare app connecting patients with doctors, 
+                                featuring appointment scheduling and telemedicine capabilities.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Flutter</span>
+                                <span class="tech-tag">WebRTC</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">MongoDB</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">View Demo</a>
+                                <a href="#" class="project-link">Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">📊</div>
+                        <div class="project-content">
+                            <h3 class="project-title">Analytics Dashboard</h3>
+                            <p class="project-description">
+                                Real-time analytics dashboard for mobile app metrics with 
+                                interactive charts and customizable reporting features.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Swift</span>
+                                <span class="tech-tag">Kotlin</span>
+                                <span class="tech-tag">Charts</span>
+                                <span class="tech-tag">Core Data</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">View Demo</a>
+                                <a href="#" class="project-link">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">🎵</div>
+                        <div class="project-content">
+                            <h3 class="project-title">Music Streaming App</h3>
+                            <p class="project-description">
+                                High-performance music streaming application with offline playback, 
+                                social features, and AI-powered recommendations.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">React Native</span>
+                                <span class="tech-tag">GraphQL</span>
+                                <span class="tech-tag">AWS</span>
+                                <span class="tech-tag">Machine Learning</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">App Store</a>
+                                <a href="#" class="project-link">Play Store</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">🚗</div>
+                        <div class="project-content">
+                            <h3 class="project-title">Ride Sharing Platform</h3>
+                            <p class="project-description">
+                                Complete ride-sharing solution with real-time GPS tracking, 
+                                payment processing, and driver-passenger matching algorithms.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Flutter</span>
+                                <span class="tech-tag">Google Maps</span>
+                                <span class="tech-tag">Socket.io</span>
+                                <span class="tech-tag">PostgreSQL</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">View Demo</a>
+                                <a href="#" class="project-link">Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">💰</div>
+                        <div class="project-content">
+                            <h3 class="project-title">FinTech Banking App</h3>
+                            <p class="project-description">
+                                Secure banking application with biometric authentication, 
+                                transaction history, and budgeting tools.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Swift</span>
+                                <span class="tech-tag">Kotlin</span>
+                                <span class="tech-tag">Biometrics</span>
+                                <span class="tech-tag">Encryption</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">View Demo</a>
+                                <a href="#" class="project-link">Security Report</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section contact">
+            <div class="container">
+                <h2 class="section-title">Let's Work Together</h2>
+                <div class="contact-content">
+                    <div class="contact-form">
+                        <h3>Send me a message</h3>
+                        <form>
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" name="subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Get in touch</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div>
+                                <h4>Email</h4>
+                                <p><a href="mailto:KariimAhmed8@gmail.com" style="color: var(--primary-color); text-decoration: none;">KariimAhmed8@gmail.com</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📱</div>
+                            <div>
+                                <h4>Phone</h4>
+                                <p><a href="tel:+971504551054" style="color: var(--primary-color); text-decoration: none;">+971 504551054</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div>
+                                <h4>Location</h4>
+                                <p>Dubai, UAE</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">💼</div>
+                            <div>
+                                <h4>LinkedIn</h4>
+                                <p><a href="https://www.linkedin.com/in/kariim8/" target="_blank" style="color: var(--primary-color); text-decoration: none;">linkedin.com/in/kariim8/</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🐙</div>
+                            <div>
+                                <h4>GitHub</h4>
+                                <p><a href="https://github.com/karim-8" target="_blank" style="color: var(--primary-color); text-decoration: none;">github.com/karim-8</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Your Name. All rights reserved. Built with passion for mobile development.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = targetSection.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update active nav link
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Update active nav link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPos = window.scrollY + document.querySelector('header').offsetHeight + 50;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+                
+                if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+                    if (navLink) {
+                        navLink.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Contact form handling
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            // Simulate form submission
+            alert('Thank you for your message! I\'ll get back to you soon.');
+            
+            // Reset form
+            e.target.reset();
+        });
+
+        // Add animation on scroll for elements
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.skill-card, .timeline-item, .project-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
